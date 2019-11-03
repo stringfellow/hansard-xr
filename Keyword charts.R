@@ -39,6 +39,8 @@ hansard <- hansard %>%
 hansard$Date <- as.POSIXct(hansard$Date)
 hansard[is.na(hansard)] <- 0 # replace all NAs with zeros
 
+# Inspect
+sapply(hansard[, -1], table)
 
 # Add keywords together
 hansard$climate_alarm <- hansard$climate_crisis + hansard$climate_emergency 
@@ -77,9 +79,9 @@ ggsave("hansard-extinction-rebellion.pdf", width = 6, height = 4, device = "pdf"
 # With LOESS smoothing function
 span = 0.2
 ggplot(data = hansard_2017) + 
-  geom_line(aes(Date, scale(extinction_rebellion)), color = "limegreen", size = 1.2, alpha = 0.6, stat = "smooth", span = span, method = "loess") +
-  geom_line(aes(Date, scale(climate_alarm)), color = "red4", size = 1.2, alpha = 0.6, stat = "smooth", span = span, method = "loess") +
-  geom_line(aes(Date, scale(global_heating)), color = "red", size = 1.2, alpha = 0.6, stat = "smooth", span = span, method = "loess") +
+  geom_line(aes(Date, scale(extinction_rebellion)), color = "limegreen", size = 1.2, alpha = 0.7, stat = "smooth", span = span, method = "loess") +
+  geom_line(aes(Date, scale(climate_alarm)), color = "red4", size = 1.2, alpha = 0.7, stat = "smooth", span = span, method = "loess") +
+  geom_line(aes(Date, scale(global_heating)), color = "red", size = 1.2, alpha = 0.7, stat = "smooth", span = span, method = "loess") +
   geom_vline(xintercept = as.POSIXct("2018-11-29"), color = "hotpink") +
   geom_vline(xintercept = as.POSIXct("2019-04-15"), color = "hotpink", linetype = "longdash") +
   ylab("Standardised count of keywords in Hansard") +
@@ -87,7 +89,7 @@ ggplot(data = hansard_2017) +
   theme(axis.text.y = element_blank()) +
   annotate(label = '"Extinction Rebellion"', "text", x = as.POSIXct("2017-08-29"), y = 0.1, color = "limegreen") +
   annotate(label = '"Climate crisis/emergency"', "text", x = as.POSIXct("2018-02-28"), y = -0.4, color = "red4") +
-  annotate(label = '"Climate change & global warming"', "text", x = as.POSIXct("2018-07-29"), y = 0.3, color = "red") +
+  annotate(label = '"Climate change & global warming"', "text", x = as.POSIXct("2018-06-29"), y = 0.3, color = "red") +
   annotate(label = "2018-11-29", "text", x = as.POSIXct("2018-08-29"), y = 1.6, color = "hotpink") +
   annotate(label = "2019-04-15", "text", x = as.POSIXct("2019-07-15"), y = 1.6, color = "hotpink")
 
